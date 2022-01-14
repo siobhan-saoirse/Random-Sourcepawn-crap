@@ -11,6 +11,8 @@ new Handle:sv_cheats = INVALID_HANDLE;
 new Handle:sway = INVALID_HANDLE;
 new Handle:interp = INVALID_HANDLE;
 
+// this addon fixes incorrect weapon sounds, and frozen reload animations. it also increases crit rate for some weapons (i think)
+
 public Plugin:myinfo = 
 {
 	name = "[TF2] Enhanced Weapon Crap",
