@@ -330,7 +330,7 @@ public void Event_InvApp(Event event, const char[] name, bool dontBroadcast)
 	int client = GetClientOfUserId(event.GetInt("userid"));
 	
     if (!g_bAutoSwitchTeams[client]) {
-		CreateTimer(0.01, Timer_SetPlaybackRate, client, TIMER_REPEAT);
+		//CreateTimer(0.01, Timer_SetPlaybackRate, client, TIMER_REPEAT);
 		
         g_bAutoSwitchTeams[client] = true;
 	}
@@ -339,7 +339,7 @@ public void Event_InvApp(Event event, const char[] name, bool dontBroadcast)
     //TF2Attrib_SetByName(client, "mod see enemy health", 1.0);
     CreateTimer(0.1, Timer_SetReady, client, TIMER_DATA_HNDL_CLOSE); 
     isReady[client] = false;
-	TF2Attrib_SetByName(client, "deploy time decreased", 1.4);
+	TF2Attrib_SetByName(client, "deploy time decreased", 1.3);
     if (g_bIsHostile[client]) {
         SetEntProp(client, Prop_Data, "m_CollisionGroup", 9);
 	    TF2Attrib_SetByName(client, "dmg taken from bullets reduced", 0.7);
