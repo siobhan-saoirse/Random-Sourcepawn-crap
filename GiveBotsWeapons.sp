@@ -1839,6 +1839,7 @@ public Action Timer_GiveWeapons(Handle timer, any data)
 						TF2Attrib_SetByName(weapon[0], "fire rate penalty", 0.5);
 						TF2Attrib_SetByName(weapon[0], "faster reload rate", -0.8);
 						TF2Attrib_SetByName(client, "Projectile speed increased", 0.65);
+						TF2Attrib_SetByName(weapon[0], "projectile spread angle penalty", 3.0);
 					}
 					case 3:
 					{
@@ -1846,6 +1847,7 @@ public Action Timer_GiveWeapons(Handle timer, any data)
 						TF2Attrib_SetByName(weapon[0], "faster reload rate", -0.8);
 						TF2Attrib_SetByName(weapon[0], "clip size upgrade atomic", 5.0);
 						TF2Attrib_SetByName(weapon[0], "Projectile speed increased", 0.65);
+						TF2Attrib_SetByName(weapon[0], "projectile spread angle penalty", 3.0);
 					}
 					case 4:
 					{
@@ -1853,6 +1855,7 @@ public Action Timer_GiveWeapons(Handle timer, any data)
 						TF2Attrib_SetByName(weapon[0], "faster reload rate", 0.4);
 						TF2Attrib_SetByName(weapon[0], "clip size upgrade atomic", 5.0);
 						TF2Attrib_SetByName(weapon[0], "Blast radius decreased", 1.2);
+						TF2Attrib_SetByName(weapon[0], "projectile spread angle penalty", 5.0);
 						TF2Attrib_SetByName(weapon[0], "damage bonus", 1.0);
 						TF2Attrib_SetByName(weapon[0], "damage causes airblast", 1.0);
 						TF2Attrib_SetByName(client, "rage giving scale", 0.15);
