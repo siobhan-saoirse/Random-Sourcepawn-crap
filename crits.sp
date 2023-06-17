@@ -66,6 +66,14 @@ public OnPluginStart()
 	RegAdminCmd("sm_behuman", Command_Human, ADMFLAG_CHEATS);
 	RegAdminCmd("sm_beimpostor", Command_FriendlyFire, ADMFLAG_CHEATS);
 	RegAdminCmd("sm_beimposter", Command_FriendlyFire, ADMFLAG_CHEATS);
+	RegAdminCmd("sm_rapidfire", Command_RapidFire, ADMFLAG_CHEATS);
+	RegAdminCmd("sm_burstfire", Command_BurstFire, ADMFLAG_CHEATS);
+	RegAdminCmd("sm_blast", Command_Blast, ADMFLAG_CHEATS);
+	RegAdminCmd("sm_colonelbarrage", Command_ColonelBarrage, ADMFLAG_CHEATS);
+	RegAdminCmd("sm_super", Command_Super, ADMFLAG_CHEATS);
+	RegAdminCmd("sm_uber", Command_Uber, ADMFLAG_CHEATS);
+	RegAdminCmd("sm_deflector", Command_Deflector, ADMFLAG_CHEATS);
+	RegAdminCmd("sm_jumpingsandman", Command_JumpingSandman, ADMFLAG_CHEATS);
     HookEvent("player_team", Event_PlayerTeam);
 	HookEntityOutput("team_control_point", "OnCapTeam2", OnGateCapture);
 	StartPrepSDKCall(SDKCall_Player);
@@ -105,11 +113,16 @@ public Action:MiniBossProxy(entity, const String:propName[], &iValue, element)
     
     decl String:m_plrModelName[PLATFORM_MAX_PATH];
     GetEntPropString(entity, Prop_Data, "m_ModelName", m_plrModelName, sizeof(m_plrModelName));
+
     if (StrContains(m_plrModelName,"/bot_") != -1 && StrContains(m_plrModelName,"boss") == -1) {
+	
+		if (StrContains(m_plrModelName,"buster") == -1) {
+			iValue = 0;
+		} else {
+			iValue = 1;
+		}
 
-	    iValue = 0;
-
-    } else if (StrContains(m_plrModelName,"/bot_") != -1 && (StrContains(m_plrModelName,"boss") != -1 || StrContains(m_plrModelName,"buster") != -1)) {
+    } else if (StrContains(m_plrModelName,"/bot_") != -1 && StrContains(m_plrModelName,"boss") != -1) {
     
 	    iValue = 1;
 
@@ -264,7 +277,7 @@ public Action Event_PlayerDeath(Handle event, const char[] name, bool dontBroadc
 	}
 	new money = GetEntProp(attacker, Prop_Send, "m_nCurrency");
 	if (IsValidClient(attacker)) {
-		SetEntProp(attacker, Prop_Send, "m_nCurrency", money+60);
+		SetEntProp(attacker, Prop_Send, "m_nCurrency", money+100);
 	}
     if (IsValidEntity(shotByWhatImpostor[client])) { 
         attacker = GetClientUserId(shotByWhatImpostor[client]);
@@ -328,7 +341,7 @@ public Action Client_TraceAttack(int victim, int &attacker, int &inflictor, floa
 public void Event_InvApp(Event event, const char[] name, bool dontBroadcast)
 {
 	int client = GetClientOfUserId(event.GetInt("userid"));
-	
+	TF2_AddCondition(client, TFCond_SpeedBuffAlly, 0.1);
     if (!g_bAutoSwitchTeams[client]) {
 		//CreateTimer(0.01, Timer_SetPlaybackRate, client, TIMER_REPEAT);
 		
@@ -336,7 +349,7 @@ public void Event_InvApp(Event event, const char[] name, bool dontBroadcast)
 	}
 	shotByWhatImpostor[client] = -1;
     SetEntProp(client, Prop_Send, "m_nRenderFX", 0);
-    //TF2Attrib_SetByName(client, "mod see enemy health", 1.0);
+    TF2Attrib_SetByName(client, "mod see enemy health", 1.0);
     CreateTimer(0.1, Timer_SetReady, client, TIMER_DATA_HNDL_CLOSE); 
     isReady[client] = false;
 	TF2Attrib_SetByName(client, "deploy time decreased", 1.3);
@@ -355,6 +368,7 @@ public void Event_InvApp(Event event, const char[] name, bool dontBroadcast)
 	    //TF2Attrib_RemoveByName(client, "dmg taken from fire reduced");
 	    //TF2Attrib_RemoveByName(client, "health regen");    
     }
+	TF2Attrib_SetByName(client, "Reload time decreased", 1.0);	
     g_bHeadshot[client] = false;
     g_bHeadshoted[client] = false;
     g_bShotByImpostor[client] = false;
@@ -440,7 +454,59 @@ public Action:CritWeaponSH(clients[64], &numClients, String:sample[PLATFORM_MAX_
             SetEntPropFloat(client, Prop_Send, "m_flPlaybackRate", 0.8);
             return Plugin_Changed;
         }
-
+			if(StrContains(sample, "soldier_mvm_robot", false) != -1 && StrContains(m_plrModelName,"/bot_") != -1)
+			{
+					switch(GetRandomInt(1,2))
+					{
+						case 1: Format(sample, sizeof(sample), "vo/mvm/norm/soldier_mvm_robot0%i.mp3", GetRandomInt(1, 9));
+						case 2: Format(sample, sizeof(sample), "vo/mvm/norm/soldier_mvm_robot%i.mp3", GetRandomInt(10, 29));
+					}
+				return Plugin_Changed;
+			}
+			if(StrContains(sample, "soldier_mvm_m_robot", false) != -1 && StrContains(m_plrModelName,"/bot_") != -1 && StrContains(m_plrModelName,"_boss") != -1)
+			{
+					switch(GetRandomInt(1,2))
+					{
+						case 1: Format(sample, sizeof(sample), "vo/mvm/mght/soldier_mvm_m_robot0%i.mp3", GetRandomInt(1, 9));
+						case 2: Format(sample, sizeof(sample), "vo/mvm/mght/soldier_mvm_m_robot%i.mp3", GetRandomInt(10, 29));
+					}
+				return Plugin_Changed;
+			}
+				if (StrContains(m_plrModelName,"/bot_") != -1 && StrContains(m_plrModelName,"boss") != -1) {
+				
+						if (GetClientTeam(client) == TFTeam_Red) {
+												
+							if(StrContains(sample, "physics/flesh/flesh_impact_bullet", false) != -1)
+							{
+								Format(sample, sizeof(sample), "physics/metal/metal_solid_impact_bullet0%i.wav", GetRandomInt(1,4));
+								PrecacheSound(sample);
+								pitch = GetRandomInt(95,100);
+								EmitSoundToAll(sample, client, SNDCHAN_BODY, 95, _, 0.4, pitch);
+								return Plugin_Stop;
+							}
+							else if(StrContains(sample, ")weapons/rocket_shoot", false) != -1)
+							{
+								ReplaceString(sample, sizeof(sample), ")weapons/", "mvm/giant_soldier/giant_soldier_");
+								PrecacheSound(sample);
+								if(StrContains(sample, "crit", false) == -1) {
+									pitch = GetRandomInt(95,105)
+								}
+								EmitSoundToAll(sample, client, SNDCHAN_WEAPON, 90, _, _, pitch);
+								return Plugin_Stop;
+							}
+							else if(StrContains(sample, ")weapons/grenade_launcher_", false) != -1)
+							{
+								ReplaceString(sample, sizeof(sample), ")weapons/", "mvm/giant_demoman/giant_demoman_");
+								ReplaceString(sample, sizeof(sample), "grenade_launcher_", "grenade_");
+								PrecacheSound(sample);
+								EmitSoundToAll(sample, client, SNDCHAN_WEAPON, 100, _, _, pitch);
+								return Plugin_Stop;
+							} 
+						}
+				}
+				if (StrContains(sample, "vo/mvm/", false) != -1) {
+					PrecacheSound(sample);
+				}
 				if (StrContains(sample, "vo/", false) != -1 && StrContains(sample, classname, false) != -1 && g_bIsHappy[entity]) {
 					//PrintToServer(sample)
 
@@ -864,7 +930,7 @@ public Action:CritWeaponSH(clients[64], &numClients, String:sample[PLATFORM_MAX_
             EmitSoundToAll(sample,client,channel,level,flags,volume,pitch);
             return Plugin_Changed;
         }
-        if (GetClientTeam(entity) == _:TFTeam_Blue && StrContains(m_plrModelName,"/bot_") == -1) {
+        if ((GetClientTeam(entity) == _:TFTeam_Blue || TF2_GetPlayerClass(client) == TFClass_Spy) && StrContains(m_plrModelName,"/bot_") == -1) {
             if (StrContains(sample, "vo/", false) == -1)
                 return Plugin_Continue;
             if (StrContains(sample, classname, false) == -1)
@@ -876,6 +942,15 @@ public Action:CritWeaponSH(clients[64], &numClients, String:sample[PLATFORM_MAX_
             ReplaceString(sample, sizeof(sample), "vo/mvm/norm/", "vo/", false);
             ReplaceString(sample, sizeof(sample), "_mvm_", "_", false);
             ReplaceString(sample, sizeof(sample), "_m_", "_", false);
+			
+			if(StrContains(sample, "vo/soldier_robot", false) != -1)
+			{
+					switch(GetRandomInt(1,2))
+					{
+						case 1: Format(sample, sizeof(sample), "vo/soldier_robot0%i.mp3", GetRandomInt(1, 9));
+						case 2: Format(sample, sizeof(sample), "vo/soldier_robot%i.mp3", GetRandomInt(10, 29));
+					}
+			}
             if (StrContains(sample, "vo/", false) != -1)
                 ReplaceString(sample, sizeof(sample), ".wav", ".mp3", false);
             new String:classname_mvm[15];
@@ -1468,7 +1543,182 @@ public Action:Command_Human(client, args)
 		SetEntProp(target_list[i], Prop_Send, "m_bUseClassAnimations", 1); 
 		LogAction(client, target_list[i], "\"%L\" made \"%L\" a Human", client, target_list[i]);
 	}
-}                                            
+}                          
+public Action:Command_RapidFire(client, args)
+{
+	new weapon[3];
+	weapon[0] = GetPlayerWeaponSlot(client, 0);
+	weapon[1] = GetPlayerWeaponSlot(client, 1);
+	weapon[2] = GetPlayerWeaponSlot(client, 2);
+	TF2Attrib_RemoveAll(weapon[0]);
+	TF2Attrib_RemoveAll(weapon[1]);
+	TF2Attrib_RemoveAll(weapon[2]);
+	if (TF2_GetPlayerClass(client) == TFClass_Soldier) {
+		TF2Attrib_SetByName(weapon[0], "fire rate penalty", 0.5);
+		TF2Attrib_SetByName(weapon[0], "Reload time increased", -0.8);
+		TF2Attrib_SetByName(client, "Projectile speed decreased", 0.65);
+		TF2Attrib_SetByName(weapon[0], "projectile spread angle penalty", 3.0);
+	} else if (TF2_GetPlayerClass(client) == TFClass_DemoMan) {
+		
+		TF2Attrib_SetByName(weapon[0], "fire rate penalty", 0.75);
+		TF2Attrib_SetByName(weapon[0], "Reload time increased", -0.4);
+						
+	} else {
+		
+		ReplyToCommand(client, "[SM] %s", "This command only works for Soldier and Demoman");	
+	
+	}
+}                   
+public Action:Command_ColonelBarrage(client, args)
+{
+	new weapon[3];
+	weapon[0] = GetPlayerWeaponSlot(client, 0);
+	weapon[1] = GetPlayerWeaponSlot(client, 1);
+	weapon[2] = GetPlayerWeaponSlot(client, 2);
+	TF2Attrib_RemoveAll(weapon[0]);
+	TF2Attrib_RemoveAll(weapon[1]);
+	TF2Attrib_RemoveAll(weapon[2]);
+	if (TF2_GetPlayerClass(client) == TFClass_Soldier) {
+		TF2Attrib_SetByName(weapon[0], "fire rate penalty", 0.2);
+		TF2Attrib_SetByName(weapon[0], "Reload time increased", 0.22);
+		TF2Attrib_SetByName(weapon[0], "clip size upgrade atomic", 26.0);
+		TF2Attrib_SetByName(weapon[0], "projectile spread angle penalty", 5.0);
+		TF2Attrib_SetByName(client, "damage bonus", 1.5);
+		TF2Attrib_SetByName(client, "Projectile speed decreased", 0.4);
+		TF2Attrib_SetByName(client, "health regen", 40.0);
+						
+	} else {
+		
+		ReplyToCommand(client, "[SM] %s", "This command only works for Soldier");	
+	
+	}
+}           
+public Action:Command_Blast(client, args)
+{
+	new weapon[3];
+	weapon[0] = GetPlayerWeaponSlot(client, 0);
+	weapon[1] = GetPlayerWeaponSlot(client, 1);
+	weapon[2] = GetPlayerWeaponSlot(client, 2);
+	TF2Attrib_RemoveAll(weapon[0]);
+	TF2Attrib_RemoveAll(weapon[1]);
+	TF2Attrib_RemoveAll(weapon[2]);
+	if (TF2_GetPlayerClass(client) == TFClass_Soldier) {
+						TF2Attrib_SetByName(weapon[0], "fire rate penalty", 0.25);
+						TF2Attrib_SetByName(weapon[0], "Reload time increased", 0.4);
+						TF2Attrib_SetByName(weapon[0], "clip size upgrade atomic", 5.0);
+						TF2Attrib_SetByName(weapon[0], "Blast radius decreased", 1.2);
+						TF2Attrib_SetByName(weapon[0], "projectile spread angle penalty", 5.0);
+						TF2Attrib_SetByName(weapon[0], "damage bonus", 1.0);
+						TF2Attrib_SetByName(weapon[0], "damage causes airblast", 1.0);
+						TF2Attrib_SetByName(client, "rage giving scale", 0.15);
+						
+	} else {
+		
+		ReplyToCommand(client, "[SM] %s", "This command only works for Soldier");	
+	
+	}
+}         
+public Action:Command_BurstFire(client, args)
+{
+	new weapon[3];
+	weapon[0] = GetPlayerWeaponSlot(client, 0);
+	weapon[1] = GetPlayerWeaponSlot(client, 1);
+	weapon[2] = GetPlayerWeaponSlot(client, 2);
+	TF2Attrib_RemoveAll(weapon[0]);
+	TF2Attrib_RemoveAll(weapon[1]);
+	TF2Attrib_RemoveAll(weapon[2]);
+	if (TF2_GetPlayerClass(client) == TFClass_Soldier) {
+
+						TF2Attrib_SetByName(weapon[0], "fire rate penalty", 0.1);
+						TF2Attrib_SetByName(weapon[0], "Reload time increased", 0.6);
+						TF2Attrib_SetByName(weapon[0], "clip size upgrade atomic", 5.0);
+						TF2Attrib_SetByName(weapon[0], "Projectile speed decreased", 0.65);
+						TF2Attrib_SetByName(weapon[0], "projectile spread angle penalty", 3.0);
+						
+						
+	} else if (TF2_GetPlayerClass(client) == TFClass_DemoMan) {
+		
+		
+						TF2Attrib_SetByName(weapon[0], "fire rate penalty", 0.1);
+						TF2Attrib_SetByName(weapon[0], "Reload time increased", 0.65);
+						TF2Attrib_SetByName(weapon[0], "clip size upgrade atomic", 7.0);
+						TF2Attrib_SetByName(weapon[0], "Projectile speed decreased", 1.1);
+						TF2Attrib_SetByName(weapon[0], "projectile spread angle penalty", 5.0);
+		
+	} else {
+		
+		ReplyToCommand(client, "[SM] %s", "This command only works for Soldier and Demoman");	
+	
+	}
+}       
+public Action:Command_Deflector(client, args)
+{
+	new weapon[3];
+	weapon[0] = GetPlayerWeaponSlot(client, 0);
+	weapon[1] = GetPlayerWeaponSlot(client, 1);
+	weapon[2] = GetPlayerWeaponSlot(client, 2);
+	if (TF2_GetPlayerClass(client) == TFClass_Heavy) {
+
+		TF2Attrib_SetByName(weapon[0], "damage bonus", 1.5);
+		TF2Attrib_SetByName(weapon[0], "attack projectiles", 1.0);
+		
+	} else {
+		
+		ReplyToCommand(client, "[SM] %s", "This command only works for Heavy");	
+	
+	}
+}  
+public Action:Command_Super(client, args)
+{
+	new weapon[3];
+	weapon[0] = GetPlayerWeaponSlot(client, 0);
+	weapon[1] = GetPlayerWeaponSlot(client, 1);
+	weapon[2] = GetPlayerWeaponSlot(client, 2);
+	if (TF2_GetPlayerClass(client) == TFClass_Scout) {
+
+		TF2Attrib_SetByName(client, "move speed penalty", 2.0);
+						
+		TF2_AddCondition(client, TFCond_SpeedBuffAlly, 0.1);
+		
+	} else {
+		
+		ReplyToCommand(client, "[SM] %s", "This command only works for Scout");	
+	
+	}
+}    
+public Action:Command_Uber(client, args)
+{
+	new weapon[3];
+	weapon[0] = GetPlayerWeaponSlot(client, 0);
+	weapon[1] = GetPlayerWeaponSlot(client, 1);
+	weapon[2] = GetPlayerWeaponSlot(client, 2);
+	if (TF2_GetPlayerClass(client) == TFClass_Medic) {
+
+		TF2Attrib_SetByName(client, "ubercharge rate bonus", 2.0);
+						
+	} else {
+		
+		ReplyToCommand(client, "[SM] %s", "This command only works for Medic");	
+	
+	}
+}    
+public Action:Command_JumpingSandman(client, args)
+{
+	new weapon[3];
+	weapon[0] = GetPlayerWeaponSlot(client, 0);
+	weapon[1] = GetPlayerWeaponSlot(client, 1);
+	weapon[2] = GetPlayerWeaponSlot(client, 2);
+	if (TF2_GetPlayerClass(client) == TFClass_Scout) {
+
+		TF2Attrib_SetByName(weapon[2], "effect bar recharge rate increased", 0.5);
+		TF2Attrib_SetByName(client, "increased jump height", 2.0);
+		
+	} else {
+		
+		ReplyToCommand(client, "[SM] %s", "This command only works for Scout");	
+	
+	}
+}                                         
 public Action:Command_JoinBlue(client, args)
 {
 	new entflags = GetEntityFlags( client );

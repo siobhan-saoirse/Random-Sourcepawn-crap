@@ -507,7 +507,7 @@ public Action Timer_GiveWeapons(Handle timer, any data)
 					{
 						case 1:
 						{
-							CreateWeapon(client, "tf_weapon_compound_bow", 0, 56, 10);
+							CreateWeapon(client, "tf_weapon_sniperrifle_decap", 0, 664, 10);
 						}
 						case 2:
 						{
@@ -531,7 +531,7 @@ public Action Timer_GiveWeapons(Handle timer, any data)
 						}
 						case 7:
 						{
-							CreateWeapon(client, "tf_weapon_compound_bow", 0, 1092, 10);
+							CreateWeapon(client, "tf_weapon_sniperrifle_decap", 0, 30665, 10);
 						}
 						case 8:
 						{
@@ -1745,13 +1745,13 @@ public Action Timer_GiveWeapons(Handle timer, any data)
 			weapon[0] = GetPlayerWeaponSlot(client, 0);
 			weapon[1] = GetPlayerWeaponSlot(client, 1);
 			weapon[2] = GetPlayerWeaponSlot(client, 2);
-			TF2Attrib_SetByName(client, "health regen", 100.0);
+			TF2Attrib_SetByName(client, "health regen", 10.0);
 			TF2Attrib_RemoveAll(weapon[0]);
 			TF2Attrib_RemoveAll(weapon[1]);
 			TF2Attrib_RemoveAll(weapon[2]);
 			//TF2Attrib_RemoveAll(client);
 			if (TF2_GetPlayerClass(client) == TFClass_Scout) {
-				TF2Attrib_SetByName(weapon[0], "damage penalty", 2.0);
+				TF2Attrib_SetByName(weapon[0], "damage penalty", 1.5);
 				TF2Attrib_SetByName(weapon[0], "fire rate penalty", 0.6);
 				TF2Attrib_SetByName(weapon[0], "clip size bonus upgrade", 3.0);
 				TF2Attrib_SetByName(weapon[0], "maxammo primary increased", 2.5);
@@ -1759,16 +1759,18 @@ public Action Timer_GiveWeapons(Handle timer, any data)
 				TF2Attrib_SetByName(weapon[0], "maxammo grenades1 increased", 2.5);
 				TF2Attrib_SetByName(weapon[0], "maxammo metal increased", 2.5);
 				TF2Attrib_SetByName(weapon[0], "heal on kill", 100.0);
-				TF2Attrib_SetByName(weapon[1], "damage penalty", 2.0);
+				TF2Attrib_SetByName(weapon[1], "damage penalty", 1.5);
 				TF2Attrib_SetByName(weapon[1], "fire rate penalty", 0.6);
 				TF2Attrib_SetByName(weapon[1], "heal on kill", 100.0);
-				TF2Attrib_SetByName(weapon[2], "damage penalty", 2.0);
+				TF2Attrib_SetByName(weapon[2], "damage penalty", 1.5);
 				TF2Attrib_SetByName(weapon[2], "fire rate penalty", 0.6);
 				TF2Attrib_SetByName(weapon[2], "heal on kill", 100.0);
 				TF2Attrib_SetByName(weapon[1], "projectile penetration heavy", 3.0);
 				TF2Attrib_SetByName(weapon[2], "projectile penetration heavy", 3.0);
+				TF2Attrib_SetByName(client, "move speed bonus", 2.0);
 			} else if (TF2_GetPlayerClass(client) == TFClass_Pyro) {
-				TF2Attrib_SetByName(weapon[0], "damage penalty", 2.0);
+				TF2Attrib_SetByName(weapon[0], "damage penalty", 1.5);
+				TF2Attrib_SetByName(weapon[0], "airblast pushback scale", 2.0);
 				TF2Attrib_SetByName(weapon[0], "fire rate penalty", 0.6);
 				TF2Attrib_SetByName(weapon[0], "clip size bonus upgrade", 3.0);
 				TF2Attrib_SetByName(weapon[0], "maxammo primary increased", 2.5);
@@ -1778,15 +1780,15 @@ public Action Timer_GiveWeapons(Handle timer, any data)
 				TF2Attrib_SetByName(weapon[0], "heal on kill", 100.0);
 				TF2Attrib_SetByName(weapon[0], "weapon burn dmg increased", 2.0);
 				TF2Attrib_SetByName(weapon[0], "weapon burn time increased", 2.0);
-				TF2Attrib_SetByName(weapon[1], "damage penalty", 2.0);
+				TF2Attrib_SetByName(weapon[1], "damage penalty", 1.5);
 				TF2Attrib_SetByName(weapon[1], "fire rate penalty", 0.6);
 				TF2Attrib_SetByName(weapon[1], "heal on kill", 100.0);
-				TF2Attrib_SetByName(weapon[2], "damage penalty", 2.0);
+				TF2Attrib_SetByName(weapon[2], "damage penalty", 1.5);
 				TF2Attrib_SetByName(weapon[2], "fire rate penalty", 0.6);
 				TF2Attrib_SetByName(weapon[2], "heal on kill", 100.0);
 				TF2Attrib_SetByName(weapon[2], "projectile penetration heavy", 3.0);
 			} else if (TF2_GetPlayerClass(client) == TFClass_Heavy) {
-				TF2Attrib_SetByName(weapon[0], "damage penalty", 2.0);
+				TF2Attrib_SetByName(weapon[0], "damage penalty", 1.5);
 				TF2Attrib_SetByName(weapon[0], "fire rate penalty", 0.6);
 				TF2Attrib_SetByName(weapon[0], "clip size bonus upgrade", 3.0);
 				TF2Attrib_SetByName(weapon[0], "maxammo primary increased", 2.5);
@@ -1796,16 +1798,17 @@ public Action Timer_GiveWeapons(Handle timer, any data)
 				TF2Attrib_SetByName(weapon[0], "heal on kill", 100.0);
 				TF2Attrib_SetByName(weapon[0], "weapon burn dmg increased", 2.0);
 				TF2Attrib_SetByName(weapon[0], "weapon burn time increased", 2.0);
-				TF2Attrib_SetByName(weapon[1], "damage penalty", 2.0);
+				TF2Attrib_SetByName(weapon[1], "damage penalty", 1.5);
 				TF2Attrib_SetByName(weapon[1], "fire rate penalty", 0.6);
 				TF2Attrib_SetByName(weapon[1], "heal on kill", 100.0);
-				TF2Attrib_SetByName(weapon[2], "damage penalty", 2.0);
+				TF2Attrib_SetByName(weapon[2], "damage penalty", 1.5);
 				TF2Attrib_SetByName(weapon[2], "fire rate penalty", 0.6);
 				TF2Attrib_SetByName(weapon[2], "heal on kill", 100.0);
 				TF2Attrib_SetByName(weapon[2], "projectile penetration heavy", 3.0);
 			} else if (TF2_GetPlayerClass(client) == TFClass_Sniper) {
 				TF2Attrib_SetByName(weapon[0], "damage penalty", 2.0);
-				TF2Attrib_SetByName(weapon[0], "fire rate penalty", 0.6);
+				TF2Attrib_SetByName(weapon[0], "faster reload rate", 0.4);
+				TF2Attrib_SetByName(weapon[0], "explosive sniper shot", 3.0);
 				TF2Attrib_SetByName(weapon[0], "clip size bonus upgrade", 3.0);
 				TF2Attrib_SetByName(weapon[0], "maxammo primary increased", 2.5);
 				TF2Attrib_SetByName(weapon[0], "maxammo secondary increased", 2.5);
@@ -1817,8 +1820,74 @@ public Action Timer_GiveWeapons(Handle timer, any data)
 				TF2Attrib_SetByName(weapon[1], "damage penalty", 2.0);
 				TF2Attrib_SetByName(weapon[1], "fire rate penalty", 0.6);
 				TF2Attrib_SetByName(weapon[1], "heal on kill", 100.0);
-				TF2Attrib_SetByName(weapon[2], "damage penalty", 2.0);
+				TF2Attrib_SetByName(weapon[2], "damage penalty", 1.5);
 				TF2Attrib_SetByName(weapon[2], "fire rate penalty", 0.6);
+				TF2Attrib_SetByName(weapon[2], "heal on kill", 100.0);
+				TF2Attrib_SetByName(weapon[2], "projectile penetration heavy", 3.0);
+			} else if (TF2_GetPlayerClass(client) == TFClass_Engineer) {
+				TF2Attrib_SetByName(weapon[0], "damage penalty", 2.0);
+				TF2Attrib_SetByName(weapon[0], "faster reload rate", 0.5);
+				TF2Attrib_SetByName(weapon[0], "explosive sniper shot", 3.0);
+				TF2Attrib_SetByName(weapon[0], "clip size bonus upgrade", 3.0);
+				TF2Attrib_SetByName(weapon[0], "maxammo primary increased", 2.5);
+				TF2Attrib_SetByName(weapon[0], "maxammo secondary increased", 2.5);
+				TF2Attrib_SetByName(weapon[0], "maxammo grenades1 increased", 2.5);
+				TF2Attrib_SetByName(weapon[0], "maxammo metal increased", 2.5);
+				TF2Attrib_SetByName(weapon[0], "engy building health bonus", 4.0);
+				TF2Attrib_SetByName(weapon[0], "engy dispenser radius increased", 4.0);
+				TF2Attrib_SetByName(weapon[0], "engy disposable sentries", 1.0);
+				TF2Attrib_SetByName(weapon[0], "engy sentry fire rate", 0.7);
+				TF2Attrib_SetByName(weapon[0], "metal regen", 25);
+				TF2Attrib_SetByName(weapon[0], "heal on kill", 100.0);
+				TF2Attrib_SetByName(weapon[0], "weapon burn dmg increased", 2.0);
+				TF2Attrib_SetByName(weapon[0], "weapon burn time increased", 2.0);
+				TF2Attrib_SetByName(weapon[1], "damage penalty", 2.0);
+				TF2Attrib_SetByName(weapon[1], "fire rate penalty", 0.6);
+				TF2Attrib_SetByName(weapon[1], "heal on kill", 100.0);
+				TF2Attrib_SetByName(weapon[2], "damage penalty", 1.5);
+				TF2Attrib_SetByName(weapon[2], "fire rate penalty", 0.6);
+				TF2Attrib_SetByName(weapon[2], "heal on kill", 100.0);
+				TF2Attrib_SetByName(weapon[2], "projectile penetration heavy", 3.0);
+			} else if (TF2_GetPlayerClass(client) == TFClass_Medic) {
+				TF2Attrib_SetByName(weapon[0], "damage penalty", 2.0);
+				TF2Attrib_SetByName(weapon[0], "faster reload rate", 0.5);
+				TF2Attrib_SetByName(weapon[0], "explosive sniper shot", 3.0);
+				TF2Attrib_SetByName(weapon[0], "clip size bonus upgrade", 3.0);
+				TF2Attrib_SetByName(weapon[0], "maxammo primary increased", 2.5);
+				TF2Attrib_SetByName(weapon[0], "maxammo secondary increased", 2.5);
+				TF2Attrib_SetByName(weapon[0], "maxammo grenades1 increased", 2.5);
+				TF2Attrib_SetByName(weapon[0], "maxammo metal increased", 2.5);
+				TF2Attrib_SetByName(weapon[0], "heal on kill", 100.0);
+				TF2Attrib_SetByName(weapon[2], "generate rage on heal", 2.0);
+				TF2Attrib_SetByName(weapon[0], "weapon burn dmg increased", 2.0);
+				TF2Attrib_SetByName(weapon[0], "weapon burn time increased", 2.0);
+				TF2Attrib_SetByName(weapon[1], "damage penalty", 2.0);
+				TF2Attrib_SetByName(weapon[1], "overheal expert", 4.0);
+				TF2Attrib_SetByName(weapon[1], "healing mastery", 4.0);
+				TF2Attrib_SetByName(weapon[1], "fire rate penalty", 0.6);
+				TF2Attrib_SetByName(weapon[1], "heal on kill", 100.0);
+				TF2Attrib_SetByName(weapon[2], "damage penalty", 1.5);
+				TF2Attrib_SetByName(weapon[2], "fire rate penalty", 0.6);
+				TF2Attrib_SetByName(weapon[2], "heal on kill", 100.0);
+				TF2Attrib_SetByName(weapon[2], "projectile penetration heavy", 3.0);
+			} else if (TF2_GetPlayerClass(client) == TFClass_Spy) {
+				TF2Attrib_SetByName(weapon[0], "damage penalty", 2.0);
+				TF2Attrib_SetByName(weapon[0], "faster reload rate", 0.5);
+				TF2Attrib_SetByName(weapon[0], "clip size bonus upgrade", 3.0);
+				TF2Attrib_SetByName(weapon[0], "maxammo primary increased", 2.5);
+				TF2Attrib_SetByName(weapon[0], "maxammo secondary increased", 2.5);
+				TF2Attrib_SetByName(weapon[0], "maxammo grenades1 increased", 2.5);
+				TF2Attrib_SetByName(weapon[0], "maxammo metal increased", 2.5);
+				TF2Attrib_SetByName(weapon[0], "heal on kill", 100.0);
+				TF2Attrib_SetByName(weapon[0], "weapon burn dmg increased", 2.0);
+				TF2Attrib_SetByName(weapon[0], "weapon burn time increased", 2.0);
+				TF2Attrib_SetByName(weapon[1], "damage penalty", 2.0);
+				TF2Attrib_SetByName(weapon[1], "fire rate penalty", 0.6);
+				TF2Attrib_SetByName(weapon[1], "heal on kill", 100.0);
+				TF2Attrib_SetByName(weapon[2], "damage penalty", 1.5);
+				TF2Attrib_SetByName(weapon[2], "fire rate penalty", 0.6);
+				TF2Attrib_SetByName(weapon[2], "armor piercing", 100.0);
+				TF2Attrib_SetByName(weapon[2], "robo sapper", 3.0);
 				TF2Attrib_SetByName(weapon[2], "heal on kill", 100.0);
 				TF2Attrib_SetByName(weapon[2], "projectile penetration heavy", 3.0);
 			} else if (TF2_GetPlayerClass(client) == TFClass_Soldier) {
@@ -1844,7 +1913,7 @@ public Action Timer_GiveWeapons(Handle timer, any data)
 					case 3:
 					{
 						TF2Attrib_SetByName(weapon[0], "fire rate penalty", 0.1);
-						TF2Attrib_SetByName(weapon[0], "faster reload rate", -0.8);
+						TF2Attrib_SetByName(weapon[0], "faster reload rate", 0.6);
 						TF2Attrib_SetByName(weapon[0], "clip size upgrade atomic", 5.0);
 						TF2Attrib_SetByName(weapon[0], "Projectile speed increased", 0.65);
 						TF2Attrib_SetByName(weapon[0], "projectile spread angle penalty", 3.0);
@@ -1861,10 +1930,10 @@ public Action Timer_GiveWeapons(Handle timer, any data)
 						TF2Attrib_SetByName(client, "rage giving scale", 0.15);
 					}
 				}
-				TF2Attrib_SetByName(weapon[1], "damage penalty", 2.0);
+				TF2Attrib_SetByName(weapon[1], "damage penalty", 1.5);
 				TF2Attrib_SetByName(weapon[1], "fire rate penalty", 0.6);
 				TF2Attrib_SetByName(weapon[1], "heal on kill", 100.0);
-				TF2Attrib_SetByName(weapon[2], "damage penalty", 2.0);
+				TF2Attrib_SetByName(weapon[2], "damage penalty", 1.5);
 				TF2Attrib_SetByName(weapon[2], "fire rate penalty", 0.6);
 				TF2Attrib_SetByName(weapon[2], "heal on kill", 100.0);
 				TF2Attrib_SetByName(weapon[2], "projectile penetration heavy", 3.0);
@@ -1889,21 +1958,24 @@ public Action Timer_GiveWeapons(Handle timer, any data)
 						TF2Attrib_SetByName(weapon[0], "projectile spread angle penalty", 5.0);
 					}
 				}
-				TF2Attrib_SetByName(weapon[1], "damage penalty", 2.0);
+				TF2Attrib_SetByName(weapon[1], "damage penalty", 1.5);
 				TF2Attrib_SetByName(weapon[1], "fire rate penalty", 0.6);
 				TF2Attrib_SetByName(weapon[1], "heal on kill", 100.0);
-				TF2Attrib_SetByName(weapon[2], "damage penalty", 2.0);
+				TF2Attrib_SetByName(weapon[2], "damage penalty", 1.5);
 				TF2Attrib_SetByName(weapon[2], "fire rate penalty", 0.6);
 				TF2Attrib_SetByName(weapon[2], "heal on kill", 100.0);
 				TF2Attrib_SetByName(weapon[2], "projectile penetration heavy", 3.0);
 			}
-			TF2Attrib_SetByName(client, "dmg taken from bullets reduced", 0.7);
-			TF2Attrib_SetByName(client, "dmg taken from blast reduced", 0.7);
-			TF2Attrib_SetByName(client, "dmg taken from crit reduced", 0.7);
-			TF2Attrib_SetByName(client, "dmg taken from fire reduced", 0.7);
+			TF2Attrib_SetByName(client, "dmg taken from bullets reduced", 0.25);
+			TF2Attrib_SetByName(client, "dmg taken from blast reduced", 0.25);
+			TF2Attrib_SetByName(client, "dmg taken from crit reduced", 0.25);
+			TF2Attrib_SetByName(client, "dmg taken from fire reduced", 0.25);
+			TF2Attrib_SetByName(client, "increased jump height", 1.6);
+			TF2Attrib_SetByName(client, "health regen", 10);
+			TF2Attrib_SetByName(client, "build rate bonus", 0.01);
 		}
 	}
-	return Plugin_Continue;
+	return Plugin_Continue;	
 }
 
 public void EventSuddenDeath(Handle event, const char[] name, bool dontBroadcast)
